@@ -8,10 +8,10 @@ const {
   getUseCaseDetail,
 } = require("../controllers/allControllers");
 
-router.get("/languages", getLanguageList);
-router.get("/all-tones", getToneList);
-router.get("/tones/:id", getToneDetail);
-router.get("/usecases", getUseCaseList);
-router.get("/usecases/:id", getUseCaseDetail);
+router.route("/languages").get(getLanguageList);
+router.route("/tones").get(getToneList);
+router.route("/tones/:id").get(getToneDetail);
+router.route("/usecases").get(getUseCaseList);
+router.route("/usecases/:id").get(getUseCaseDetail);
 
 module.exports = router;

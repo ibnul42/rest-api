@@ -1,4 +1,5 @@
 const axios = require("axios");
+const { response } = require("express");
 
 const config = {
   headers: {
@@ -7,7 +8,7 @@ const config = {
   },
 };
 
-// gett all languages list
+// get all languages list
 const getLanguageList = async (req, res) => {
   const response = await axios.get(`https://api.rytr.me/v1/languages`, config);
   res.status(200).json(response.data);
@@ -61,10 +62,32 @@ const getUseCaseDetail = async (req, res) => {
   }
 };
 
+// post Ryte
+// Sypported format - html | text
+// Supported creativity levels creativityLevel - default | none | low | medium | high | max
+// Supported variations - 1 to 3
+const postRyte = async (req, res) => {
+  const data = req.body;
+  const response = await axios.post(
+    `https://api.rytr.me/v1/ryte`,
+    data,
+    config
+  );
+  if (!response.data.data) {
+    res.status(400).json({
+      data: "Sorry invalid input, please try again.",
+      ...response.data,
+    });
+  } else {
+    res.status(200).json(response.data);
+  }
+};
+
 module.exports = {
   getLanguageList,
   getToneList,
   getToneDetail,
   getUseCaseList,
   getUseCaseDetail,
+  postRyte,
 };
